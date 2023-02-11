@@ -29,7 +29,7 @@ router.post("/", async (req, res) => {
 				userId: user._id,
 				token: crypto.randomBytes(32).toString("hex"),
 			}).save();
-		}
+		} 
 
 		const url = `${process.env.BASE_URL}/password-reset/${user._id}/${token.token}/`;
 		await sendEmail(user.email, "Password Reset", url);
