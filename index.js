@@ -8,6 +8,7 @@ const answerRoutes = require("./route/allquestionandanswer");
 const questionRoutes = require("./route/adminquestion");
 const markRoutes = require("./route/mark");
 const userRoutes = require("./route/user");
+const newQuestion=require('./route/Question')
 const admincreateRoutes = require("./route/admincreate");
 const adminloginRoutes = require("./route/adminlogin");
 const passwordReset = require("./route/passwordreset");
@@ -27,6 +28,7 @@ app.use("/api/question", questionRoutes);
 app.use("/api/mark", markRoutes);
 app.use("/api/answer", answerRoutes);
 app.use("/api/userfirst", userRoutes);
+app.use("/api/userfirst", newQuestion);
 app.use("/api", loginRoutes);
 app.use("/api/indexs", indexsRoutes);
 app.use("/api/admincreate", admincreateRoutes);

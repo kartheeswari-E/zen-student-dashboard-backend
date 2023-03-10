@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router();
-const {DUSER, REGIS,validates,validate} = require("../models/register.models");
+const {DUSER,validates} = require("../models/register.models");
+
 const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
@@ -30,26 +31,7 @@ router.post("/",async(req,res)=>{
 })
 
 
-router.post("/ques",async(req,res)=>{
-    try{
-        const payload = req.body;
 
-        const newQuestion = new REGIS(payload);
-
-        await newQuestion.save((err, data)=> {
-            if(err){
-                return res.status(400).send({message: 'Error while adding new question. Please check the data'});
-            }
-
-            res.status(201).send({questionid: data._id, message: "Question has been added successfully." })
-        })
-
-    }catch(error){
-        res.status(500).send({
-            message: "Internal Server Error"
-        })
-    }
-});
 
 router.post('/upda/:email', (req, res) => {
     try{
@@ -69,21 +51,7 @@ router.post('/upda/:email', (req, res) => {
 });
 
 
-router.get("/allquestion",async(req,res)=>{
-    try{
-REGIS.find((err,data)=>{
-    if(err){
-        res.status(400).send({message:"error while retriving"})
-    }
-    res.status(200).send(data);
-})
-    }
-    catch(error){
-        console.log(error);
-        res.status(500).send({ message: "Internal Server Error" });  
-    }
 
-})
 
 
 router.get("/allanswer",async(req,res)=>{
@@ -102,39 +70,7 @@ DUSER.find((err,data)=>{
 
 })
 
-// router.post('/update/:ID', (req, res) => {
-//     try{
-//        REGIS.findByIdAndUpdate({_id: req.params.ID}, {$set: req.body}, (err, data) =>{
-//             if(err){
-//                 return res.status(400).send({message: 'Error while updating an existing details. Please check the data'})
-//             }
 
-//             res.status(201).send({questionid:data._id, message: "details have been updated."})
-//             console.log(req.body);
-//         })
-
-//     }catch(error){
-//         res.status(500).send({
-//             message: "Internal Server Error"
-//         })
-//     }
-// });
-
-
-router.delete("/delete/:quesID",async(req,res)=>{
-    try{
-REGIS.deleteOne({_id:req.params.quesID},(err,data)=>{
-    if(err){
-        res.status(400).send({message:"error while deleting data"})
-    }
-    res.status(200).send({message:`deleted id ${req.params.quesID} successfully`})
-})
-    }
-    catch(error){
-        console.log(error);
-        res.status(500).send({ message: "Internal Server Error" });  
-    }
-})
 
 router.get('/:ID', (req, res) => {
     try{
@@ -167,6 +103,8 @@ router.get('/up/:pID', (req, res) => {
         })
     }
 });
+
+
 
 
 module.exports=router;
